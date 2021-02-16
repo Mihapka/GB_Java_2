@@ -3,6 +3,8 @@ package Lesson_1;
 import Lesson_1.entities.Cat;
 import Lesson_1.entities.Man;
 import Lesson_1.entities.Robat;
+import Lesson_1.things.Treadmill;
+import Lesson_1.things.Wall;
 
 public class StartLesson {
 

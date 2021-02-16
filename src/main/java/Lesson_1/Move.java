@@ -1,7 +1,7 @@
-package Lesson_1.entities;
+package Lesson_1;
 
-import Lesson_1.Treadmill;
-import Lesson_1.Wall;
+import Lesson_1.things.Treadmill;
+import Lesson_1.things.Wall;
 
 public interface Move {
 

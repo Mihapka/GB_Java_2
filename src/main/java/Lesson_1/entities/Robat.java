@@ -1,9 +1,10 @@
 package Lesson_1.entities;
 
-import Lesson_1.Treadmill;
-import Lesson_1.Wall;
+import Lesson_1.Move;
+import Lesson_1.things.Treadmill;
+import Lesson_1.things.Wall;
 
-public class Robat implements Move{
+public class Robat implements Move {
 
     private String name;
     private int maxDistance;

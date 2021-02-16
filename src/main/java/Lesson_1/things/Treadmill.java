@@ -1,4 +1,4 @@
-package Lesson_1;
+package Lesson_1.things;
 
 public class Treadmill {
 
