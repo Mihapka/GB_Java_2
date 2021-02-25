@@ -1,13 +1,14 @@
 package Lesson_2;
 
-public class MyException extends NumberFormatException {
+public class MyException extends RuntimeException {
+
+    public MyException() {
+        super();
+    }
 
 
     public MyException(String a, int b) {
         System.out.println("Неверный формат " + a + " " + b);
     }
 
-    public MyException(String a, String b) {
-        System.out.println("Неверный формат " + a + " " + b);
-    }
 }
