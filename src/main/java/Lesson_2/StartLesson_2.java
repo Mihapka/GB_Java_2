@@ -38,6 +38,18 @@ public class StartLesson_2 {
         checkArray(arrayWrongLenght2);
     }
 
+    public static void checkLenghtArray(String[][] array) {
+
+        if (array.length != 4) {
+            throw new MyException("строк", array.length);
+        }
+
+        for (int k = 0; k < array.length; k++) {
+            if (array[k].length != 4) {
+                throw new MyException("столбца", k);
+            }
+        }
+    }
 
     public static void checkSumArray(String[][] array) {
 
@@ -45,7 +57,7 @@ public class StartLesson_2 {
             for (int l = 0; l < array[k].length; l++) {
                 try {
                     summ += Integer.parseInt(array[k][l]);
-                } catch (NumberFormatException e) {
+                } catch (MyException e) {
                     System.out.println("Ой, неверный формат в ячейке: " + "[" + k + "]" + "[" + l + "]");
                 }
             }
@@ -54,26 +66,12 @@ public class StartLesson_2 {
         summ = 0;
     }
 
-    public static void checkLenghtArray(String[][] array) {
-
-        if (array.length != 4) {
-            throw new IllegalArgumentException("неверный количество строк, их: " + array.length);
-        }
-
-        for (int k = 0; k < array.length; k++) {
-            if (array[k].length != 4) {
-                throw new IllegalArgumentException("неверный размер столбца номер: " + k);
-            }
-        }
-    }
-
     public static void checkArray(String[][] array) {
 
         try {
             checkLenghtArray(array);
             checkSumArray(array);
-        } catch (MyException | IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (MyException e) {
             checkSumArray(array);
         }
     }
