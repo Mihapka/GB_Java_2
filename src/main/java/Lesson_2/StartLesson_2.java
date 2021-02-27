@@ -38,10 +38,10 @@ public class StartLesson_2 {
         checkArray(arrayWrongLenght2);
     }
 
-    public static void checkLenghtArray(String[][] array) {
+    public static void checkLenghtArray(String[][] array) throws MyException{
 
         if (array.length != 4) {
-            throw new MyException("строк", array.length);
+            throw new MyException("строки", array.length);
         }
 
         for (int k = 0; k < array.length; k++) {
@@ -57,8 +57,8 @@ public class StartLesson_2 {
             for (int l = 0; l < array[k].length; l++) {
                 try {
                     summ += Integer.parseInt(array[k][l]);
-                } catch (MyException e) {
-                    System.out.println("Ой, неверный формат в ячейке: " + "[" + k + "]" + "[" + l + "]");
+                } catch (NumberFormatException e) {
+                    System.out.println("Не верный формат данных в ячейке: " + "[" + k + "]" + "[" + l + "]");
                 }
             }
         }
