@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyChat extends JFrame {
-
-    private JTextField jTextField;
+    private JTextField field;
     private JTextArea jTextArea;
     private JButton button;
 
@@ -20,38 +19,37 @@ public class MyChat extends JFrame {
         jPanel.setLayout(new BorderLayout());
 
         jTextArea = new JTextArea();
-        jTextArea.setEnabled(false);
         jTextArea.setLineWrap(true);
+        jTextArea.setEditable(false);
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
         jPanel.add(jScrollPane, BorderLayout.CENTER);
 
-        JPanel bottomJPanel = new JPanel();
-        bottomJPanel.setLayout(new BorderLayout());
+        JPanel bottomJp = new JPanel();
+        bottomJp.setLayout(new BorderLayout());
 
         addTextField();
-        bottomJPanel.add(jTextField, BorderLayout.NORTH);
+        bottomJp.add(field, BorderLayout.CENTER);
 
         addButton();
-        bottomJPanel.add(button, BorderLayout.SOUTH);
-        jPanel.add(bottomJPanel, BorderLayout.SOUTH);
+        bottomJp.add(button, BorderLayout.SOUTH);
+        jPanel.add(bottomJp, BorderLayout.SOUTH);
         add(jPanel);
 
         setVisible(true);
-        jTextField.grabFocus();
+        field.grabFocus();
     }
 
     private void sendMessage() {
-        if (!jTextField.getText().isEmpty()) {
-
-            jTextArea.append(jTextField.getText() + "\n");
-            jTextField.setText("");
-            jTextField.grabFocus();
+        if (!field.getText().isEmpty()) {
+            jTextArea.append(field.getText() + "\n");
+            field.setText("");
+            field.grabFocus();
         }
     }
 
     private void addTextField() {
-        jTextField = new JTextField();
-        jTextField.addActionListener(new ActionListener() {
+        field = new JTextField();
+        field.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sendMessage();
