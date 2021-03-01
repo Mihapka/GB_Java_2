@@ -1,18 +1,3 @@
-/*задание*/
-/*
-    1.  Напишите метод, на вход которого подаётся двумерный строковый массив размером 4х4,
-        при подаче массива другого размера необходимо бросить исключение MyArraySizeException.
-
-    2.  Далее метод должен пройтись по всем элементам массива, преобразовать в int, и
-        просуммировать. Если в каком-то элементе массива преобразование не удалось
-        (например, в ячейке лежит символ или текст вместо числа), должно быть брошено исключение
-        MyArrayDataException, с детализацией в какой именно ячейке лежат неверные данные.
-
-    3.  В методе main() вызвать полученный метод, обработать возможные исключения
-        MySizeArrayException и MyArrayDataException, и вывести результат расчета.
-*/
-
-
 package Lesson_2;
 
 public class StartLesson_2 {
@@ -38,15 +23,15 @@ public class StartLesson_2 {
         checkArray(arrayWrongLenght2);
     }
 
-    public static void checkLenghtArray(String[][] array) throws MyException{
+    public static void checkLenghtArray(String[][] array) throws MyArrSizeException{
 
         if (array.length != 4) {
-            throw new MyException("строки", array.length);
+            throw new MyArrSizeException("строки", array.length);
         }
 
         for (int k = 0; k < array.length; k++) {
             if (array[k].length != 4) {
-                throw new MyException("столбца", k);
+                throw new MyArrSizeException("столбца", k);
             }
         }
     }
@@ -71,7 +56,7 @@ public class StartLesson_2 {
         try {
             checkLenghtArray(array);
             checkSumArray(array);
-        } catch (MyException e) {
+        } catch (MyArrSizeException e) {
             checkSumArray(array);
         }
     }
