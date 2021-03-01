@@ -1,8 +1,7 @@
 package Lesson_4;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OtherTasks {
@@ -12,7 +11,8 @@ public class OtherTasks {
 //        taskTwo();
 //        taskThree();
 //        taskFour();
-        taskFive();
+//        taskFive();
+        taskSix();
     }
 
     public static Integer[] createList() {
@@ -82,11 +82,22 @@ public class OtherTasks {
 
     public static void taskFive() {
 
-        List<Integer> list = Arrays.asList(1,2,3,4,5,6,999);
-        int sum = list.stream().reduce((x,y) -> x + y).get();
-        System.out.println((double) sum/ list.size());
+        List<Integer> list = Arrays.asList(createList());
+        int sum = list.stream().reduce((x, y) -> x + y).get();
+        System.out.println((double) sum / list.size());
     }
 
-//    task 5
+//    task 6
 
+    public static void taskSix() {
+
+        String simbol = "a";
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list, "qazw", "aqse", "aaa", "Aax","afd" , "qaws", "azs" );
+
+        System.out.println(list.stream()
+                .filter( n -> n.length() == 3 )
+                .filter(n -> n.substring(0,1).equals(simbol))
+                .collect( Collectors.toList()));
+    }
 }
