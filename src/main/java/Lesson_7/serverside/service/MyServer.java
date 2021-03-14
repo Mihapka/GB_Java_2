@@ -59,10 +59,22 @@ public class MyServer {
             if (!c.getName().equals(name)) {
                 c.sendMsg(name + ": " + msg);
                 System.out.println(name + ": " + msg);
-            }else {
+            } else {
                 c.sendMsg(msg);
             }
+        }
+    }
 
+    public synchronized void sentMsgToClient(String msg, String name, String nameTo) {
+
+        for (ClientHandler c : clientsList) {
+            if (c.getName().equals(nameTo)) {
+                c.sendMsg(name + ": " + msg.substring(7));
+            }
+            if (c.getName().equals(name)) {
+                c.sendMsg(msg.substring(7));
+            }
         }
     }
 }
+

@@ -70,11 +70,17 @@ public class ClientHandler {
     public void readMsg() throws IOException {
         while (true) {
             String strFromClient = dis.readUTF();
-            System.out.println("Сообщение от " + name + ": " + strFromClient);
             if (strFromClient.equals("/q")) {
                 return;
             }
-            myServer.sentMsgToClient(strFromClient, name);
+            String[] strSplit = strFromClient.split("\\s");
+            if (strSplit[0].equals("/pm")) {
+                myServer.sentMsgToClient(strFromClient, name, strSplit[1]);
+                System.out.println(strSplit[0] + "--" + strSplit[1] + "--" + strSplit[2]);
+            } else {
+                myServer.sentMsgToClient(strFromClient, name);
+                System.out.println("Сообщение от " + name + ": " + strFromClient);
+            }
         }
     }
 
@@ -84,7 +90,7 @@ public class ClientHandler {
 
     public void closeConnection() {
         myServer.unsubscribe(this);
-        myServer.sentMsgToClient( " вышел из чата", name);
+        myServer.sentMsgToClient(" вышел из чата", name);
         try {
             dis.close();
         } catch (IOException e) {

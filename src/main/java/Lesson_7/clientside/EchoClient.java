@@ -55,8 +55,7 @@ public class EchoClient extends JFrame {
                     String serverMsg = dis.readUTF();
                     if (serverMsg.startsWith("/authok")) {
                         setAuthorised(true);
-                        String[] parts = serverMsg.split("\\s");
-                        chatArea.append(parts[1] + " авторизовался" + "\n");
+                        chatArea.append("Вы авторизовались" + "\n");
                         break;
                     }
 
