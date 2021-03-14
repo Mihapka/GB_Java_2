@@ -1,4 +1,4 @@
-package Chat;
+package Lesson_6;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,12 +89,14 @@ public class ClientSide extends JFrame {
         new Thread(() -> {
             while (true) {
                 try {
-                    String serverMessage = dis.readUTF();
-                    if (serverMessage.equals("/q")) {
-                        break;
+                    if (!dis.readUTF().isEmpty()) {
+                        String serverMessage = dis.readUTF();
+                        if (serverMessage.equals("/q")) {
+                            break;
+                        }
+                        chatArea.append(serverMessage);
+                        System.out.println(serverMessage);
                     }
-                    chatArea.append(serverMessage);
-                    System.out.println(serverMessage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
