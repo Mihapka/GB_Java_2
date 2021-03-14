@@ -1,14 +1,22 @@
 package Lesson_7.serverside.service;
 
-import Lesson_7.serverside.interfaces.AuthService;
+import Lesson_7.serverside.interfaces.AuthServic;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthServiceImpl implements Lesson_7.serverside.interfaces.AuthService {
+public class AuthServiceImpl implements AuthServic {
 
 
-    private List<Entry> entries;
+    private List<User> userList;
+
+    public AuthServiceImpl() {
+
+        userList = new ArrayList<>();
+        userList.add(new User("a", "a", "a"));
+        userList.add(new User("b", "b", "b"));
+        userList.add(new User("c", "c", "c"));
+    }
 
     @Override
     public void start() {
@@ -20,30 +28,22 @@ public class AuthServiceImpl implements Lesson_7.serverside.interfaces.AuthServi
         System.out.println("Сервис аутентификации остановлен");
     }
 
-    public AuthServiceImpl() {
-
-        entries = new ArrayList<>();
-        entries.add(new Entry("a", "a", "a"));
-        entries.add(new Entry("b", "b", "b"));
-        entries.add(new Entry("c", "c", "c"));
-    }
-
     @Override
     public String getNickByLoginPass(String login, String pass) {
 
-        for (Entry e : entries) {
-            if (e.login.equals(login) && e.pass.equals(pass)) return e.nick;
+        for (User u : userList) {
+            if (u.login.equals(login) && u.pass.equals(pass)) return u.nick;
         }
         return "";
     }
 
-    private class Entry {
+    private class User {
 
         private String login;
         private String pass;
         private String nick;
 
-        public Entry(String login, String pass, String nick) {
+        public User(String login, String pass, String nick) {
             this.login = login;
             this.pass = pass;
             this.nick = nick;

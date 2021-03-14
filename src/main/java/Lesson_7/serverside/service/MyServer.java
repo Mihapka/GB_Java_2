@@ -1,6 +1,6 @@
 package Lesson_7.serverside.service;
 
-import Lesson_7.serverside.interfaces.AuthService;
+import Lesson_7.serverside.interfaces.AuthServic;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,19 +11,20 @@ import java.util.List;
 public class MyServer {
     private final int PORT = 8181;
 
-    private List<ClientHandler> clients;
+    private List<ClientHandler> clientsList;
 
-    private AuthService authService;
+    private AuthServic authService;
 
-    public AuthService getAuthService() {
-        return authService;
+    public AuthServic getAuthService() {
+        return this.authService;
     }
 
     public MyServer() {
+
         try (ServerSocket server = new ServerSocket(PORT)) {
-            authService = new AuthServiceImpl();
+            this.authService = new AuthServiceImpl();
             authService.start();
-            clients = new ArrayList<>();
+            clientsList = new ArrayList<>();
 
             while (true) {
                 System.out.println("Сервер ожидает подключения");
@@ -40,22 +41,28 @@ public class MyServer {
         }
     }
 
+    public synchronized void subscribe(ClientHandler c) {
+        clientsList.add(c);
+    }
+
+    public synchronized void unsubscribe(ClientHandler c) {
+        clientsList.remove(c);
+    }
+
     public synchronized boolean isNickBusy(String nick) {
 
-        return clients.stream().anyMatch(a -> a.getName().equals(nick));
+        return clientsList.stream().anyMatch(a -> a.getName().equals(nick));
     }
 
-    public synchronized void sentMsgToClient(String msg) {
-        for (ClientHandler o : clients) {
-            o.sendMsg(msg);
+    public synchronized void sentMsgToClient(String msg, String name) {
+        for (ClientHandler c : clientsList) {
+            if (!c.getName().equals(name)) {
+                c.sendMsg(name + ": " + msg);
+                System.out.println(name + ": " + msg);
+            }else {
+                c.sendMsg(msg);
+            }
+
         }
-    }
-
-    public synchronized void unsubscribe(ClientHandler o) {
-        clients.remove(o);
-    }
-
-    public synchronized void subscribe(ClientHandler o) {
-        clients.add(o);
     }
 }
