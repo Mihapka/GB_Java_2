@@ -65,16 +65,21 @@ public class MyServer {
         }
     }
 
-    public synchronized void sentMsgToClient(String msg, String name, String nameTo) {
+    public synchronized void sentMsgToClient(ClientHandler clientHandler, String nameTo, String msg) {
 
         for (ClientHandler c : clientsList) {
-            if (c.getName().equals(nameTo)) {
-                c.sendMsg(name + ": " + msg.substring(7));
-            }
-            if (c.getName().equals(name)) {
-                c.sendMsg(msg.substring(7));
+            if (c.getName().equalsIgnoreCase(nameTo)) {
+                c.sendMsg(clientHandler.getName() + ": приватное сообщение: " + msg);
+                clientHandler.sendMsg("Ты написал приватное сообщение " + nameTo + ": " + msg);
+                return;
             }
         }
+        clientHandler.sendMsg(nameTo + ": оффлайн");
+    }
+
+    public synchronized void sendOnlineClientList(ClientHandler clientHandler) {
+
+        clientHandler.sendMsg("Сейчас онлайн: " + clientsList.toString());
     }
 }
 

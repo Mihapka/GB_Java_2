@@ -69,18 +69,25 @@ public class ClientHandler {
 
     public void readMsg() throws IOException {
         while (true) {
-            String strFromClient = dis.readUTF();
-            if (strFromClient.equals("/q")) {
-                return;
+            String msgFromClient = dis.readUTF();
+            if (msgFromClient.startsWith("/")) {
+
+                if (msgFromClient.startsWith("/ou")) {
+                    myServer.sendOnlineClientList(this);
+                    continue;
+                }
+                if (msgFromClient.startsWith("/pm")) {
+                    String[] parts = msgFromClient.trim().split(" ", 3);
+                    myServer.sentMsgToClient(this, parts[1], parts[2]);
+                    continue;
+                }
+                if (msgFromClient.equals("/q")) {
+                    sendMsg(msgFromClient);
+                    return;
+                }
             }
-            String[] strSplit = strFromClient.split("\\s");
-            if (strSplit[0].equals("/pm")) {
-                myServer.sentMsgToClient(strFromClient, name, strSplit[1]);
-                System.out.println(strSplit[0] + "--" + strSplit[1] + "--" + strSplit[2]);
-            } else {
-                myServer.sentMsgToClient(strFromClient, name);
-                System.out.println("Сообщение от " + name + ": " + strFromClient);
-            }
+            myServer.sentMsgToClient(msgFromClient, name);
+            System.out.println("Сообщение от " + name + ": " + msgFromClient);
         }
     }
 
@@ -106,6 +113,11 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
 

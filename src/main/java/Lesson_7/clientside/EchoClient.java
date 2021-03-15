@@ -2,10 +2,13 @@ package Lesson_7.clientside;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
+import java.util.Date;
+import java.util.TimerTask;
 
 public class EchoClient extends JFrame {
 
@@ -37,6 +40,7 @@ public class EchoClient extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(EchoClient::new);
+
     }
 
     public void setAuthorised(boolean authorised) {
@@ -50,6 +54,20 @@ public class EchoClient extends JFrame {
         dos = new DataOutputStream(socket.getOutputStream());
         setAuthorised(false);
         Thread thread = new Thread(() -> {
+
+            new Thread(new Runnable() {
+                public void run() {
+                    while(true) {
+                        try {
+                            Thread.sleep(120000); // 120 секунды в милисекундах
+                            closeConnection();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+
             try {
                 while (true) {
                     String serverMsg = dis.readUTF();
@@ -58,7 +76,7 @@ public class EchoClient extends JFrame {
                         chatArea.append("Вы авторизовались" + "\n");
                         break;
                     }
-
+                    chatArea.append(serverMsg + "\n");
                 }
                 while (true) {
                     String serverMsg = dis.readUTF();
