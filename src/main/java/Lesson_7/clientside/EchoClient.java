@@ -2,13 +2,10 @@ package Lesson_7.clientside;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
-import java.util.TimerTask;
 
 public class EchoClient extends JFrame {
 
@@ -31,7 +28,7 @@ public class EchoClient extends JFrame {
     public EchoClient() {
 
         try {
-            openConnection();
+            starConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,26 +44,18 @@ public class EchoClient extends JFrame {
         isAuthorised = authorised;
     }
 
-    public void openConnection() throws IOException {
+    public void starConnection() throws IOException {
 
         socket = new Socket(SERVER_ADDR, SERVER_PORT);
         dis = new DataInputStream(socket.getInputStream());
         dos = new DataOutputStream(socket.getOutputStream());
         setAuthorised(false);
-        Thread thread = new Thread(() -> {
+        openConnection();
+    }
 
-            new Thread(new Runnable() {
-                public void run() {
-                    while(true) {
-                        try {
-                            Thread.sleep(120000); // 120 секунды в милисекундах
-                            closeConnection();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
+    public void openConnection() {
+
+        Thread ConnectionThread = new Thread(() -> {
 
             try {
                 while (true) {
@@ -90,8 +79,25 @@ public class EchoClient extends JFrame {
             }
             closeConnection();
         });
-        thread.setDaemon(true);
-        thread.start();
+        ConnectionThread.setDaemon(true);
+        ConnectionThread.start();
+
+        Thread checkConnectionThread = new Thread(() -> {
+
+            try {
+                Thread.sleep(120000);         // 120 секунды в милисекундах
+                if (!isAuthorised) {
+                    closeConnection();
+                    chatArea.append("Вы не авторизовались," + "\n"
+                            + "Соединение будет разорванно." + "\n"
+                            + "Закройте окно.");
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        checkConnectionThread.setDaemon(true);
+        checkConnectionThread.start();
     }
 
     public void prepareGUI() {
