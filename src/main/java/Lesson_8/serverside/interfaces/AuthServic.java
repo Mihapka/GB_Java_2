@@ -1,4 +1,4 @@
-package Lesson_7.serverside.interfaces;
+package Lesson_8.serverside.interfaces;
 
 public interface AuthServic {
 

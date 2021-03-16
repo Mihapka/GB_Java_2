@@ -1,4 +1,4 @@
-package Lesson_7.clientside;
+package Lesson_8.clientside;
 
 import javax.swing.*;
 import java.awt.*;

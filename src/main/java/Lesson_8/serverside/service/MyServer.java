@@ -1,6 +1,6 @@
-package Lesson_7.serverside.service;
+package Lesson_8.serverside.service;
 
-import Lesson_7.serverside.interfaces.AuthServic;
+import Lesson_8.serverside.interfaces.AuthServic;
 
 import java.io.IOException;
 import java.net.ServerSocket;
